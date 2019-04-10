@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>命令</title>
+</head>
+<body>
+  <div>
+    <button id="btn-1">刷新列表</button>
+    <button id="btn-2">添加列表</button>
+    <button id="btn-3">删除列表</button>
+  </div>
+  <script>
+    let btn1 = document.getElementById('btn-1')
+    let btn2 = document.getElementById('btn-2')
+    let btn3 = document.getElementById('btn-3')
+
+    //实际的操作
+    let refreshList = {
+      refresh() {
+        console.log('刷新列表')
+      }
+    }
+    let addList = {
+      add() {
+        console.log('添加列表')
+      }
+    }
+    let deleteList = {
+      delete() {
+        console.log('删除列表')
+      }
+    }
+
+    //命令对象,返回统一的接口,本例中是统一的execute方法. 参数是实际的操作对象. 也就是说命令对象需要知道自己所需要实际操作者会提供什么样的操作, 至于是怎么样具体操作的,这个细节在具体的实际操作对象里. 返回统一的接口方法,是为了让发送命令的方法能使用统一的接口方法让命令的接收者执行操作. 发送命令的方法也不知道实际的操作是什么, 更不知道实际操作的细节. 但是只知道所有的命令都有一个统一的接口方法用来调用.
+    let RefreshCommand = function(receiver) {
+      return {
+        execute() {
+          receiver.refresh()
+        }
+      }
+    }
+
+    let DeleteCommand = function(receiver) {
+      return {
+        execute() {
+          receiver.delete()
+        }
+      }
+    }
+
+    let AddCommand = function(receiver) {
+      return {
+        execute() {
+          receiver.add()
+        }
+      }
+    }
+
+
+    //设置命令, 相当于是将命令发给命令的执行者的方法. 不知道每个命令是干什么,更不知道怎么干, 但是知道让命令执行有一个统一的接口方法.
+    let setCommand = function(button, command) {
+      //让命令的接受者做相关操作
+      button.onclick = function() {
+        //执行命令
+        command.execute()
+      }
+    }
+
+    //通过发送命令的setCommand方法,将命令对象**Command发往接受者btn*. 其中命令对象中包裹实际操作
+    setCommand(btn1, RefreshCommand(refreshList))
+    setCommand(btn2, AddCommand(addList))
+    setCommand(btn3, DeleteCommand(deleteList))
+
+  </script>
+</body>
+</html>

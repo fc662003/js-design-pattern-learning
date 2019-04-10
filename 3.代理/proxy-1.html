@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Proxy 1</title>
+</head>
+<body>
+  <script>
+    let createImg = function() {
+      let img = document.createElement('img')
+      document.body.appendChild(img)
+
+      return {
+        setSrc(src) {
+          img.src = src
+        }
+      }
+    }
+
+    let proxyCreateImg = function() {
+      let img = new Image()
+      img.onload = function() {
+        createImg.setSrc(this.src)
+      }
+      return {
+        setSrc(src) {
+          createImg.setSrc('loding.gif')
+          img.src = src
+        }
+      }
+    }
+
+    proxyCreateImg.setSrc('xxxx.jpg')
+  </script>
+</body>
+</html>

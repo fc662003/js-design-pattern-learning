@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Singleton 3</title>
+</head>
+<body>
+  <script>
+    //添加一个代理类，这个代理类构造一个构造函数，用户使用这个代理类来new对象
+    let Singleton = function(name) {
+      this.name = name;
+    }
+
+    let ProxySingleton = (function() {
+      let instance = null
+
+      return function(name) {
+        if (instance) {
+          return instance
+        }
+        instance = new Singleton(name)
+        return instance
+      }
+    })()
+
+    Singleton.prototype.getName = function() {
+      return this.name
+    }
+
+    let obj1 = new ProxySingleton('Chester')
+    let obj2 = new ProxySingleton('Lynn')
+
+    console.log(obj1 === obj2)
+    console.log(obj1.getName())
+    console.log(obj1 instanceof ProxySingleton)
+    console.log(obj1 instanceof Singleton)
+
+  </script>
+</body>
+</html>

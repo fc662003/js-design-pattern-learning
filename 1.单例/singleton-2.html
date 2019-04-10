@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Singleton 2</title>
+</head>
+<body>
+  <script>
+    //从构造函数上打主意，用闭包构造一个构造函数
+    let Singleton = (function(){
+      let instance = null
+
+      return function(name) {
+        if (instance) {
+          return instance
+        }
+        this.name = name
+        instance = this
+      }
+    })()
+
+    Singleton.prototype.getName = function() {
+      return this.name
+    }
+
+    let obj1 = new Singleton('Chester')
+    let obj2 = new Singleton('Lynn')
+
+    console.log(obj1 === obj2)
+    console.log(obj1.getName())
+    console.log(obj1 instanceof Singleton)
+
+    //问题：使用自执行函数重新构造一个构造函数使得代码看起来有点绕。
+  </script>
+</body>
+</html>

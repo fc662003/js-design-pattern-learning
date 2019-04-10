@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>策略</title>
+</head>
+<body>
+  <script>
+    //策略模式在于定义一系列的算法，将它们一个个封装起来，使它们可以相互替换. 因此会封装一个策略类，以及一个环境/上下文类
+    let StrategyA = function() {}
+    let StrategyB = function() {}
+    let StrategyC = function() {}
+
+    StrategyA.prototype.calcuate = function(salary) {
+      return salary * 4
+    }
+
+    StrategyB.prototype.calcuate = function(salary) {
+      return salary * 3
+    }
+
+    StrategyC.prototype.calcuate = function(salary) {
+      return salary * 2
+    }
+
+    let Bonus = function(salary, strategy) {
+      this.salary = salary
+      this.strategy = strategy
+    }
+
+    Bonus.prototype.getBonus = function() {
+      return this.strategy.calcuate(this.salary)
+    }
+
+    console.log(new Bonus(3000, new StrategyA()).getBonus())
+    console.log(new Bonus(4000, new StrategyB()).getBonus())
+    console.log(new Bonus(5000, new StrategyC()).getBonus())
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Iterator 2</title>
+</head>
+<body>
+  <script>
+    let Iterator = function(obj) {
+      let index = 0
+      let current = function() {
+        return obj[index]
+      }
+
+      let next = function() {
+        index++
+      }
+
+      let isDone = function() {
+        return index >= obj.length
+      }
+
+      return {
+        current,
+        next,
+        isDone
+      }
+    }
+
+    let iterator1= Iterator([1, 2, 3])
+    let iterator2= Iterator([1, 2, 6])
+
+    while (!iterator1.isDone() && !iterator2.isDone()) {
+      if (iterator1.current() != iterator2.current()) {
+        console.log(iterator1.current() + ' 与 ' + iterator2.current() + ' 不相等')
+        break;
+      }
+      iterator1.next()
+      iterator2.next()
+    }
+  </script>
+</body>
+</html>

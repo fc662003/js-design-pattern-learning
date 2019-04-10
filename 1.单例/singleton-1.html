@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Singleton 1</title>
+</head>
+<body>
+  <script>
+    let Singleton = function(name) {
+      this.name = name
+    }
+
+    Singleton.prototype.getName = function() {
+      return this.name
+    }
+
+    Singleton.getInstance = (function() {
+      let instance = null
+      return function(name) {
+        if (instance == null) {
+          instance = new Singleton(name)
+        }
+        return instance
+      }
+    })()
+
+    let obj1 = Singleton.getInstance('Chester')
+    let obj2 = Singleton.getInstance('Lynn')
+
+    console.log(obj1 === obj2)
+    console.log(obj1.getName())
+
+    //问题：使用者并不知道这个是个单例类，所以不知道必须要用Singleton.getInstance()的方式创建实例。因此有可能仍然使用new的方式创建实例。
+  </script>
+</body>
+</html>

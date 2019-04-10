@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>观察者模式 1</title>
+</head>
+<body>
+  <script>
+    let observer = {}
+    observer.list = {} //订阅者列表对象
+    observer.listen = function(key, fn) {
+      if (!this.list[key]) {
+        this.list[key] = []
+      }
+      this.list[key].push(fn)
+    }
+
+    observer.trigger = function() {
+      let key = Array.prototype.shift.call(arguments)
+      if (!this.list[key] || this.list[key].length == 0) {
+        return false
+      }
+      for (let index = 0; index < this.list[key].length; index++) {
+        let fn = (this.list[key])[index]
+        fn.apply(fn, arguments)
+      }
+    }
+    observer.listen('100', function(price, date) {
+      console.log('Chester 您好! 100平方米的房子,单价是: ' + price + ' 开盘日期是' + date)
+    })
+    observer.listen('100', function(price, date) {
+      console.log('Lynn 您好! 100平方米的房子,单价是: ' + price + ' 开盘日期是' + date)
+    })
+    observer.listen('90', function(price, date) {
+      console.log('Agnes 您好! 90平方米的房子,单价是: ' + price + ' 开盘日期是' + date)
+    })
+    observer.listen('90', function(price, date) {
+      console.log('Yang 您好! 90平方米的房子,单价是: ' + price + ' 开盘日期是' + date)
+    })
+    observer.listen('110', function(price, date) {
+      console.log('Alina 您好! 110平方米的房子,单价是: ' + price + ' 开盘日期是' + date)
+    })
+    observer.trigger('110', 30000, '2019-03-01')
+    observer.trigger('90', 20000, '2019-03-02')
+    observer.trigger('100', 26000, '2019-03-03')
+
+  </script>
+</body>
+</html>
