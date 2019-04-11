@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>组合</title>
+</head>
+<body>
+  <script>
+    let MacroCommand = function() {
+      let commandList = []
+      let add = function(command) {
+        commandList.push(command)
+      }
+      let execute = function() {
+        for (let index = 0; index < commandList.length; index++) {
+          let command = commandList[index]
+          command.execute()
+        }
+      }
+      return {
+        commandList,
+        add,
+        execute
+      }
+    }
+
+    let openPcCommand = {
+      execute() {
+        console.log('打开PC电脑')
+      }
+    }
+
+    let openAcCommand = {
+      execute() {
+        console.log('打开空调')
+      }
+    }
+
+    let openCdPlayerCommand = {
+      execute() {
+        console.log('打开CD音响')
+      }
+    }
+
+    let openWeCharCommand = {
+      execute() {
+        console.log('打开WeChat')
+      }
+    }
+
+    let openChrome = {
+      execute() {
+        console.log('打开Chrome浏览器')
+      }
+    }
+
+    let macroCommand1 = MacroCommand()
+    macroCommand1.add(openAcCommand)
+
+    let macroCommand2 = MacroCommand()
+    macroCommand2.add(openCdPlayerCommand)
+    macroCommand2.add(openPcCommand)
+
+    macroCommand1.add(macroCommand2)
+
+    let macroCommand3 = MacroCommand()
+    macroCommand3.add(openWeCharCommand)
+    macroCommand3.add(openChrome)
+
+    macroCommand1.add(macroCommand3)
+
+    macroCommand1.execute()
+  </script>
+</body>
+</html>

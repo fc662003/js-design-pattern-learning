@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>组合</title>
+</head>
+<body>
+  <script>
+    let Folder = function(name) {
+      this.name = name
+      this.files = []
+    }
+
+    Folder.prototype.add = function(file) {
+      this.files.push(file)
+    }
+
+    Folder.prototype.scan = function() {
+      console.log('扫描文件夹: ' + this.name)
+      for (let index = 0; index < this.files.length; index++) {
+        const element = this.files[index];
+        element.scan()
+      }
+    }
+
+    let MyFile = function(name) {
+      this.name = name
+    }
+
+    MyFile.prototype.scan = function() {
+      console.log('扫描文件: ' + this.name)
+    }
+
+    let folder1 = new Folder('VueJS')
+    let folder2 = new Folder('ReactJS')
+    let folder3 = new Folder('AngularJS')
+
+    let file1 = new MyFile('VueJS权威指南.pdf')
+    let file2 = new MyFile('VueJS实战.pdf')
+    let file3 = new MyFile('深入浅出VueJS.pdf')
+    let file4 = new MyFile('ReactJS实战.pdf')
+    let file5 = new MyFile('ReactJS精讲.pdf')
+    let file6 = new MyFile('AngularJS Cookbook.pdf')
+
+    folder1.add(file1)
+    folder1.add(file2)
+    folder1.add(file3)
+
+    folder2.add(file4)
+    folder2.add(file5)
+
+    folder3.add(file6)
+
+    let parentFolder = new Folder('我的电脑')
+
+    parentFolder.add(folder1)
+    parentFolder.add(folder2)
+    parentFolder.add(folder3)
+
+    parentFolder.scan()
+  </script>
+</body>
+</html>
